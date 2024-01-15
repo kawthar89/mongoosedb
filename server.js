@@ -1,6 +1,16 @@
 const express =require('express')
 const dbconnect=require('./config/db-connect')
+//initialisation
 const app= express()
+require('dotenv').config()
+//connexion base données
 dbconnect()
-const port=5000
-app.listen(port,(err)=>err?console.log(err):console.log(`server is running in ${port}`))
+
+
+//creation middleware
+app.use(express.json())
+app.use(('/client'),require('./routes/client'))
+app.use(('/product'),require('./routes/product'))
+
+//creation du serveur
+app.listen(process.env.PORT,(err)=>err?console.log(err):console.log(`server is running in ${process.env.PORT}`))
